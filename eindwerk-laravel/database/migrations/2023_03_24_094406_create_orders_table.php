@@ -10,12 +10,15 @@ return new class () extends Migration {
      */
     public function up(): void
     {
-        Schema::create('shopping_cart', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->foreignId('product_id');
-            $table->integer('quantity');
-            $table->integer('size');
+            $table->string('voornaam');
+            $table->string('achternaam');
+            $table->string('straat');
+            $table->string('huisnummer');
+            $table->string('postcode');
+            $table->string('woonplaats');
             $table->timestamps();
         });
     }
@@ -25,6 +28,6 @@ return new class () extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('shopping_cart');
+        Schema::dropIfExists('orders');
     }
 };

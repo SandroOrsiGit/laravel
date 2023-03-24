@@ -17,7 +17,9 @@
             <a href="{{ route('favorites') }}"><i class="fa-solid fa-heart"></i></a>
             <a href="{{ route('cart') }}" class="bg-gray-200 px-4 py-1 rounded-full">
                 <i class="fa-regular fa-cart-shopping"></i>
-                <span>3 items</span>
+                @auth
+                    <span>{{ Auth::user()->cart()->get()->count() }} items</span>
+                @endauth
             </a>
         </div>
     </div>
