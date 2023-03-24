@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Mail\ChangedMail;
 use Illuminate\Http\Request;
+use App\Mail\ChangedPassword;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class ProfileController extends Controller
 {
@@ -37,10 +40,14 @@ class ProfileController extends Controller
                 'email'=>['required', 'email',Rule::unique('users')->ignore(Auth::id())]
         ]);
 
+        Mail::to($user->email)->send(new ChangedMail($request));
+
         $user->email = $request->email;
         $user->save();
 
         // BONUS: Stuur een e-mail naar de gebruiker met de melding dat zijn e-mailadres gewijzigd is.
+
+
 
         return redirect()->route('profile.edit');
     }
@@ -57,6 +64,7 @@ class ProfileController extends Controller
         $user=Auth::user();
         $user->password= Hash::make($request->password);
         $user->save();
+        Mail::to($user->email)->send(new ChangedPassword());
 
         // BONUS: Stuur een e-mail naar de gebruiker met de melding dat zijn wachtwoord gewijzigd is.
 

@@ -4,13 +4,12 @@ namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class NewAccount extends Mailable
+class ChangedPassword extends Mailable
 {
     use Queueable;
     use SerializesModels;
@@ -29,7 +28,7 @@ class NewAccount extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'New Account at Shoestore',
+            subject: 'Changed Password',
         );
     }
 
@@ -39,7 +38,7 @@ class NewAccount extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mails.newAccount',
+            view: 'mails.changedPassword',
         );
     }
 

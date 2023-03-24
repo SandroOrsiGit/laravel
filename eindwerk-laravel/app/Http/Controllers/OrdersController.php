@@ -64,7 +64,7 @@ class OrdersController extends Controller
         // BONUS: Stuur een e-mail naar de gebruiker met de melding dat zijn bestelling gelukt is,
         // samen met een knop of link naar de show pagina van het order
 
-        //Mail::to(Auth::user()->email)->send(new OrderPlaced('http://eindwerk-laravel.test/orders/'.$order->id));
+        Mail::to(Auth::user()->email)->send(new OrderPlaced($order));
 
 
         // Redirect naar de show pagina van het order en pas de functie daar aan

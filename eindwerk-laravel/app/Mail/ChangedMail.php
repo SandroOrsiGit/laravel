@@ -2,15 +2,15 @@
 
 namespace App\Mail;
 
+use Illuminate\Http\Request;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class NewAccount extends Mailable
+class changedMail extends Mailable
 {
     use Queueable;
     use SerializesModels;
@@ -18,7 +18,7 @@ class NewAccount extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct(protected Request $request)
     {
         //
     }
@@ -29,7 +29,7 @@ class NewAccount extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'New Account at Shoestore',
+            subject: 'Changed Email Address',
         );
     }
 
@@ -39,7 +39,10 @@ class NewAccount extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mails.newAccount',
+            view: 'mails.changedMail',
+            with: [
+                'email'=>$this->request->email
+            ]
         );
     }
 

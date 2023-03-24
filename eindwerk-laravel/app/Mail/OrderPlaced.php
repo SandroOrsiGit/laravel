@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Order;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Address;
@@ -18,9 +19,8 @@ class OrderPlaced extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct(protected Order $order)
     {
-        //
     }
 
     /**
@@ -29,7 +29,6 @@ class OrderPlaced extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('shoestore@shoestore.test', 'Shoestore'),
             subject: 'Order Placed',
         );
     }
@@ -37,10 +36,13 @@ class OrderPlaced extends Mailable
     /**
      * Get the message content definition.
      */
-    public function content($link): Content
+    public function content(): Content
     {
         return new Content(
-            view: 'mail.orderPlaced',
+            view: 'mails.orderPlaced',
+            with: [
+                'order_id' => $this->order->id
+            ]
         );
     }
 
